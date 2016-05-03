@@ -5,7 +5,8 @@ public class Test {
 
 
     static {
-        System.loadLibrary("NativeFunctions");
+        System.setProperty("java.library.path", "/Users/hirsch/Library/Caches/CLion2016.1/cmake/generated/c__-ef8851f0/ef8851f0/Release");
+        System.loadLibrary("NativeFunctionsShared");
     }
 
     public static native void display();
