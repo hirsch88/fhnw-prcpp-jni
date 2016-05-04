@@ -13,7 +13,7 @@ extern "C" {
  * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_Test_display
-        (JNIEnv *, jclass);
+  (JNIEnv *, jclass);
 
 /*
  * Class:     Test
@@ -21,7 +21,7 @@ JNIEXPORT void JNICALL Java_Test_display
  * Signature: (I)I
  */
 JNIEXPORT jint JNICALL Java_Test_increment
-        (JNIEnv *, jclass, jint);
+  (JNIEnv *, jclass, jint);
 
 #ifdef __cplusplus
 }
