@@ -4,19 +4,28 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        Test t1 = new Test();
-//        t1.display();
-//
-//        System.out.println("Hello World!");
+        long start = 0;
+        long end = 0;
 
-        Matrix m1 = new Matrix(4, 5);
-        Matrix m2 = new Matrix(5, 6);
-        System.out.println(m1.amountRows);
-        System.out.println(m1.amountCols);
+        Matrix a = new Matrix(400, 6000);
+        Matrix b = new Matrix(6000, 400);
 
-        Matrix m3 = m1.multiply(m2);
-        System.out.println(m3.amountRows);
-        System.out.println(m3.amountCols);
+        // JAVA Section ------------------------------------
+        start = System.currentTimeMillis();
+        Matrix r1 = a.multiply(b);
+        end = System.currentTimeMillis();
+        System.out.println("Java Section needed " + (end - start) + " Ms");
+
+
+        // C++ Section -------------------------------------
+        start = System.currentTimeMillis();
+        Matrix r2 = a.multiplyNative(b);
+        end = System.currentTimeMillis();
+        System.out.println("C++ Section needed " + (end - start) + " Ms");
+
+
+        // Validation --------------------------------------
+        System.out.println("Multiply is equal: " + r1.equals(r2));
 
 
     }

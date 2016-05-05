@@ -7,6 +7,10 @@ import java.util.Random;
 
 public class Matrix {
 
+    static {
+        System.loadLibrary("NativeMatrix");
+    }
+
     public final int MAX_DEFAULT_VALUE = 2;
 
     public double[] values;
@@ -76,5 +80,15 @@ public class Matrix {
             return this.defaultValue;
         }
     }
+
+    public Matrix multiplyNative(Matrix m) {
+        double[] r = new double[this.amountRows * m.amountCols];
+        multiplyC(this.values, m.values, r, this.amountRows, m.amountCols, this.amountCols);
+        Matrix result = new Matrix(this.amountRows, m.amountCols);
+        result.values = r;
+        return result;
+    }
+
+    native void multiplyC(double[] a, double[] b, double[] r, int i, int j, int k);
 
 }
