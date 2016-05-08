@@ -22,16 +22,42 @@ public class Matrix {
         this.amountRows = amountRows;
         this.amountCols = amountCols;
         this.values = new double[this.getSize()];
+        this.fill();
 
     }
 
     Matrix(int amountRows, int amountCols, int defaultValue) {
         this(amountRows, amountCols);
         this.defaultValue = defaultValue;
+        this.fill();
     }
 
     Matrix multiply(Matrix m) {
         this.validate(m);
+        return this.doMultiply(m);
+    }
+
+    Matrix power(int k) {
+        if (k < 2) {
+            throw new IllegalArgumentException("k must be bigger han 1");
+        }
+
+        Matrix res = new Matrix(this.amountRows, this.amountCols);
+        res.values = this.values;
+
+
+        for (int i = 1; i < k; i++) {
+            res = res.doMultiply(this);
+        }
+
+        return res;
+    }
+
+    boolean equals(Matrix m) {
+        return Arrays.equals(this.values, m.values);
+    }
+
+    private Matrix doMultiply(Matrix m) {
         Matrix result = new Matrix(this.amountRows, m.amountCols);
 
         for (int i = 0; i < this.amountRows; i++) {
@@ -46,12 +72,7 @@ public class Matrix {
                 result.values[i * m.amountCols + j] = val;
             }
         }
-
         return result;
-    }
-
-    boolean equals(Matrix m) {
-        return Arrays.equals(this.values, m.values);
     }
 
     private boolean validate(Matrix m) {
@@ -89,6 +110,16 @@ public class Matrix {
         return result;
     }
 
+    public Matrix powerNative(int k) {
+        double[] r = new double[this.amountRows * this.amountCols];
+        powerC(k, this.values, r, this.amountRows);
+        Matrix result = new Matrix(this.amountRows, this.amountCols);
+        result.values = r;
+        return result;
+    }
+
     native void multiplyC(double[] a, double[] b, double[] r, int i, int j, int k);
+
+    private native void powerC(int k, double[] a, double[] r, int height);
 
 }
