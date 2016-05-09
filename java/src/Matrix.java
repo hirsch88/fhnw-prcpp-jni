@@ -54,7 +54,7 @@ public class Matrix {
     }
 
     boolean equals(Matrix m) {
-        return Arrays.equals(this.values, m.values);
+        return Arrays.equals(this.values, m.values) && this.amountRows == m.amountRows && this.amountCols == m.amountCols;
     }
 
     private Matrix doMultiply(Matrix m) {
